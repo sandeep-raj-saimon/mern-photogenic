@@ -8,7 +8,9 @@ const NavBar = ()=>{
     const renderList = ()=>{
         if (state){
             return[
-            <li><Link to="/profile">Profile</Link></li>,
+            <li><i class="material-icons" onClick={()=>{
+                history.push('/profile')
+            }}>account_circle</i></li>,
             <li><Link to="/createpost">CreatePost</Link></li>,
             <li>
                 <Link to="signin" onClick={()=>{
