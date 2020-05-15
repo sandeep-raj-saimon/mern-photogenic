@@ -25,13 +25,15 @@ const Profile = ()=>{
                 borderBottom:"1px solid pink"
             }}>
                 <div>
-                    <img style={{width:"160px",height:"160px",borderRadius:"80px"}}
+                    <img style={{width:"160px",height:"160px",borderRadius:"100px"}}
                     src="https://images.unsplash.com/photo-1582607450312-0b0e45fc9fe6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
                     />
+                    <i class="material-icons" onClick={()=>{
+                        console.log("profile edit")
+                    }}>create</i>  
                 </div>
                 <div>
-                    
-                    <h2 className="profileName">{state.name}</h2>      
+                    <h2 className="profileName">{state?state.name:"loading"}</h2>
                     <div className="info">
                         <h5>posts</h5>
                         <h5>followers</h5>
