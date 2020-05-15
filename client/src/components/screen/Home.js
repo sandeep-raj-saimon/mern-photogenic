@@ -104,27 +104,31 @@ const Home = ()=>{
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log(result)
+            console.log(result._id)
             const newData = data.filter(item=>{
                 return item._id !== result._id
             })
             setData(newData)
+        }).catch(err=>{
+            console.log(err)
         })
     }
 
-    const deleteComment= (postid,commentid)=>{
-        fetch(`/deletecomment/${postid}/${commentid}`,{
+    const deleteComment= (postid,commentid,commentedBy)=>{
+        fetch(`/deletecomment/${postid}/${commentid}/${commentedBy}`,{
             method:"delete",
             headers:{
                 "Authorization":"Bearer "+localStorage.getItem("jwt")
             }
         }).then(res=>res.json())
         .then(result=>{
-            console.log("client",result)
-            // const newData = data.filter(item=>{
-            //     return item._id !== result._id
-            // })
-            // setData(newData)
+            console.log(data)
+            const newData = data.filter(item=>{
+                return item._id !== result._id
+            })
+            setData(newData)
+        }).catch(err=>{
+            console.log(err)
         })
     }
 
@@ -156,12 +160,13 @@ const Home = ()=>{
                                 
                                 {
                                     item.comments.map(record=>{
-                                        console.log(record._id)
+                                        console.log(record.postedBy._id)
                                         
                                         return(
                                             <h6><span style={{fontWeight:"500"}} className="postedByName">{record.postedBy.name}</span> {record.text}
+                                            {(item.postedBy._id == state._id || record.postedBy._id == state._id) &&
                                             <i class="material-icons" style={{float:"right",fontSize:"20px"}}
-                                            onClick={()=>deleteComment(item._id,record._id)}>delete</i>
+                                            onClick={()=>deleteComment(item._id,record._id,record.postedBy._id)}>delete</i>}
                                             </h6>
                                         )
                                     })

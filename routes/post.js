@@ -113,31 +113,33 @@ router.delete('/deletepost/:postId',requireLogin,(req,res)=>{
     })
 })
 
-router.delete('/deletecomment'+'/:postId'+'/:commentId',requireLogin,(req,res)=>{
-	//console.log("server reached")
-	console.log("reached")
+router.delete('/deletecomment'+'/:postId'+'/:commentId'+'/:commentedBy',requireLogin,(req,res)=>{
+	// console.log("server reached")
+	// console.log(req.params.commentedBy)
 	Post.findOne({_id:req.params.postId})
     .exec((err,post)=>{
         if(err || !post.comments){
             return res.status(422).json({error:err})
 		}
-		
+		//console.log("to be deleted")
 
-		for (i=0;i<post.comments.length;i++){
-			if (post.comments[i]._id.toString()===req.params.commentId.toString()){
-				console.log("found")
-				const data = post.comments[i].remove({_id:req.params.commentId})
-				// .then(result=>{
-				// 	console.log(result)
-				// }).catch(err=>{
-				// 	console.log(err)
-				// })
-				
-				console.log(data)
-				break
-			}
+		if ((post.postedBy._id.toString()===req.user._id.toString())||req.params.commentedBy.toString()===req.user._id.toString()){
+			//console.log("user authorized for deleting comment")
+			
+			Post.findByIdAndUpdate( req.params.postId,
+				{ $pull: { "comments" :
+					{ _id: req.params.commentId } }, },
+					{ new: true, } )
+					.exec((error, result) =>
+						{ if (error) {
+							return res.status(402).json(error); }
+						else {
+							res.json(result); 
+							console.log(result)
+						} 
+						});
 		}
-	
+
 	}) 
 		
 })
