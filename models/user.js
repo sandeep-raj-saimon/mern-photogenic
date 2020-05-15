@@ -11,6 +11,9 @@ const userSchema = new mongoose.Schema({
 	password:{
 		type:String,
 		required:true
+	},
+	pic:{
+		type:String
 	}
 })
 mongoose.model("User",userSchema)

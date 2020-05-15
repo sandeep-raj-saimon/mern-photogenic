@@ -3,6 +3,7 @@ const router = express.Router()
 const mongoose = require('mongoose')
 const requireLogin = require('../middleware/requireLogin')
 const Post = mongoose.model("Post")
+const User = mongoose.model("User")
 
 router.get('/allpost',requireLogin,(req,res)=>{
 	Post.find()
@@ -15,6 +16,7 @@ router.get('/allpost',requireLogin,(req,res)=>{
 		console.log(err)
 	})
 })
+
 router.post('/createpost',requireLogin,(req,res)=>{
 	const {title,body,pic} = req.body
 	if (!title || !body || !pic){
@@ -34,7 +36,14 @@ router.post('/createpost',requireLogin,(req,res)=>{
 		console.log(err)
 	})
 })
+router.post('/updateprofile/:id',requireLogin,(req,res)=>{
+	console.log("server reached",req.params.id)
+	const {name,pic} = req.body
+	if (!name || !pic){
+		return res.status(422).json({error:"please add all fields"})
+	}
 
+})
 router.get('/mypost',requireLogin,(req,res)=>{
 	Post.find({postedBy:req.user._id})
 	.populate("postedBy","_id name")

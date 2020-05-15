@@ -1,10 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../App'
+import {useHistory} from 'react-router-dom'
 
 const Profile = ()=>{
     const [pics,setPics] = useState([])
     const {state,dispatch} = useContext(UserContext)
     //console.log(state)
+    const history = useHistory()
+
     useEffect(()=>{
         fetch('/mypost',{
             headers:{
@@ -30,6 +33,8 @@ const Profile = ()=>{
                     />
                     <i class="material-icons" onClick={()=>{
                         console.log("profile edit")
+                        history.push('/profile_edit')
+
                     }}>create</i>  
                 </div>
                 <div>

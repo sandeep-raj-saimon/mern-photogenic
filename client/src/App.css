@@ -43,6 +43,10 @@ font-family: 'Shadows Into Light', cursive;
 
 }
 
+i.user{
+    color:black;
+}
+
 .items{
     width:30%;
     height:100%;

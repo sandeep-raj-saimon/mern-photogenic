@@ -27,7 +27,7 @@ const CreatePost = ()=>{
             })
         .then(res=>res.json())
         .then(data=>{
-            console.log(data,"hi")
+            //console.log(data,"hi")
             if (data.error){
                 console.log(data.error)
                 M.toast({html:data.error,classes:"#ec407a pink lighten-1"})
