@@ -14,6 +14,7 @@ const ProfileEdit = ()=>{
     console.log(user)
 
     useEffect(()=>{
+        console.log("inside useEffect")
         if (url){
             fetch(`/updateprofile/${user._id}`,{
                 method:"post",

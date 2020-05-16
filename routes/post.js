@@ -36,6 +36,7 @@ router.post('/createpost',requireLogin,(req,res)=>{
 		console.log(err)
 	})
 })
+
 router.post('/updateprofile/:id',requireLogin,(req,res)=>{
 	console.log("server reached",req.params.id)
 	const {name,pic} = req.body
@@ -43,8 +44,19 @@ router.post('/updateprofile/:id',requireLogin,(req,res)=>{
 		return res.status(422).json({error:"please add all fields"})
 	}
 
+	User.findOneAndUpdate({_id:req.params.id},
+		{$set: {name:name,pic:pic}}
+	).populate().then(result=>{
+		res.json(result)
+	}).catch(err=>{
+		console.log(err)
+	})
+
 })
+    
 router.get('/mypost',requireLogin,(req,res)=>{
+	// const user = User.findOne({_id:req.user._id})
+	// console.log(user._id)
 	Post.find({postedBy:req.user._id})
 	.populate("postedBy","_id name")
 	.then(mypost=>{  

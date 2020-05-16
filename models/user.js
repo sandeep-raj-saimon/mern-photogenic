@@ -13,7 +13,8 @@ const userSchema = new mongoose.Schema({
 		required:true
 	},
 	pic:{
-		type:String
+		type:String,
+		default:"https://res.cloudinary.com/dv7eozzeh/image/upload/v1589560644/lwuypznpldeorqwtlx1v.jpg"
 	}
 })
 mongoose.model("User",userSchema)

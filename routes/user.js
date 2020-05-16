@@ -6,19 +6,11 @@ const Post = mongoose.model("Post")
 const User = mongoose.model("User")
 
 router.get('/user/:id',requireLogin,(req,res)=>{
-    console.log(req.params.id)
+    //console.log("server reached")
     User.findOne({_id:req.params.id})
     .select("-password")
     .then(user=>{
-        Post.find({postedBy:req.params.id})
-        .populate("postedBy","_id name")
-        .exec((err,posts)=>{
-            console.log(user,posts)
-            if (err){
-                return res.status(422).json({error:err})
-            }
-            res.json({user,posts})
-        })
+        res.json(user)
     }).catch(err=>{
         return res.json(422).json({error:"User not found"})
     })

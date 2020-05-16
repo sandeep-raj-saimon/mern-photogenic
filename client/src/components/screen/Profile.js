@@ -1,11 +1,29 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { UserContext } from '../../App'
 import {useHistory} from 'react-router-dom'
+import { set } from 'mongoose'
 
 const Profile = ()=>{
     const [pics,setPics] = useState([])
+    const [name,setName] = useState("")
     const {state,dispatch} = useContext(UserContext)
-    //console.log(state)
+    const id = JSON.parse(localStorage.getItem("user"))
+    const [picid,setPicid] = useState("")
+    const findId = (id)=>{
+        fetch(`user/${id}`,{
+            headers:{
+                "Authorization":"Bearer "+localStorage.getItem("jwt")
+            }
+        }).then(res=>res.json())
+        .then(result=>{
+           //console.log(result)
+           setPicid(result.pic)
+           setName(result.name)
+           //console.log(picid)
+        })
+    }
+
+    findId(id._id)
     const history = useHistory()
 
     useEffect(()=>{
@@ -15,7 +33,7 @@ const Profile = ()=>{
             }
         }).then(res=>res.json())
         .then(result=>{
-            //console.log(result)
+            // console.log(result)
             setPics(result.mypost)
         })
     })
@@ -29,16 +47,17 @@ const Profile = ()=>{
             }}>
                 <div>
                     <img style={{width:"160px",height:"160px",borderRadius:"100px"}}
-                    src="https://images.unsplash.com/photo-1582607450312-0b0e45fc9fe6?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=700&q=60"
+                    src={picid}
                     />
                     <i class="material-icons" onClick={()=>{
-                        console.log("profile edit")
+                        // console.log(state,"hi state")
+                        // console.log(picid)
                         history.push('/profile_edit')
 
                     }}>create</i>  
                 </div>
                 <div>
-                    <h2 className="profileName">{state?state.name:"loading"}</h2>
+                    <h2 className="profileName">{state?name:"loading"}</h2>
                     <div className="info">
                         <h5>posts</h5>
                         <h5>followers</h5>
