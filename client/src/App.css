@@ -46,6 +46,9 @@ font-family: 'Shadows Into Light', cursive;
 i.user{
     color:black;
 }
+i.list{
+    color:black;
+}
 
 .items{
     width:30%;
@@ -56,6 +59,7 @@ i.user{
     max-width:500px;
     height:max-content;
     margin:26px auto;
+    border: 1px solid black;
 }
 
 .createpost{

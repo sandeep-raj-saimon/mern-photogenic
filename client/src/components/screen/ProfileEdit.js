@@ -35,7 +35,7 @@ const ProfileEdit = ()=>{
                 M.toast({html:data.error,classes:"#ec407a pink lighten-1"})
             }
             else{
-                M.toast({html:"Posted Successfully!",classes:"#ec407a pink lighten-1"})
+                M.toast({html:"Edited Successfully!",classes:"#ec407a pink lighten-1"})
                 history.push('/')
             }
         }).catch(err=>{

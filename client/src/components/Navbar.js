@@ -17,7 +17,8 @@ const NavBar = ()=>{
                 localStorage.clear()
                 dispatch({type:"CLEAR"})
             }}>Signout</Link>
-            </li>
+            </li>,
+            {/*<li>  <i class="material-icons list">list</i></li>*/}
         ]
         }else{
             return[
